@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="en">
     <AuthProvider>
-      <body className={cn(inter.className, "antialiased min-h-screen pt-1")}>
+      <body className={cn(inter.className, "antialiased min-h-screen pt-16")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar />
           {children}
