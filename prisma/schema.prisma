@@ -44,4 +44,38 @@ model User {
   image    String?
   accounts Account[]
   sessions Session[]
+  quizzes Quiz[]
+}
+
+enum QuizType { 
+  mcq
+  open_ended
+}
+
+model Quiz{
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timeStart DateTime
+  topic String
+  timeEnd DateTime?
+  gameType QuizType
+  questions Question[]
+
+  @@index([userId])
+}
+
+model Question{
+  id String @id @default(cuid())
+  question String
+  answer String
+  quizId String
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  option Json?
+  procentageCorect Float?
+  questionType QuizType
+  userAnswer String?
+  IsCorrect Boolean?
+
+  @@index([quizId])
 }

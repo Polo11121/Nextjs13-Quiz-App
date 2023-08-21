@@ -22,9 +22,10 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { BookOpen, CopyCheck } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/components/ui/Separator";
+import { useCreateQuiz } from "@/hooks/useCreateQuiz";
 
-export const CreateQuiz = () => {
+export const CreateQuizForm = () => {
   const form = useForm<CreateQuizValidator>({
     resolver: zodResolver(createQuizSchema),
     defaultValues: {
@@ -33,8 +34,9 @@ export const CreateQuiz = () => {
       type: "open_ended",
     },
   });
+  const { mutate: createQuiz, isLoading } = useCreateQuiz();
 
-  const submitHandler = (values: CreateQuizValidator) => {};
+  const submitHandler = (values: CreateQuizValidator) => createQuiz(values);
 
   const changeAmountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     form.setValue("amount", parseInt(e.target.value));
@@ -120,7 +122,9 @@ export const CreateQuiz = () => {
                   Open Ended
                 </Button>
               </div>
-              <Button type="submit">Submit</Button>
+              <Button disabled={isLoading} type="submit">
+                Submit
+              </Button>
             </form>
           </Form>
         </CardContent>

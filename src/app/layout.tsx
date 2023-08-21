@@ -1,10 +1,9 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { AuthProvider } from "@/providers/AuthProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { cn } from "@/lib/utils";
+import { Providers } from "@/providers/Providers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,14 +15,12 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="en">
-    <AuthProvider>
+    <Providers>
       <body className={cn(inter.className, "antialiased min-h-screen pt-16")}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          {children}
-        </ThemeProvider>
+        <Navbar />
+        {children}
       </body>
-    </AuthProvider>
+    </Providers>
   </html>
 );
 
